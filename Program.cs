@@ -230,6 +230,27 @@ app.MapPut("/book/{id}", async (int id, SimplyBooksBEDbContext db, Book updatedB
     }
 });
 
+// DELETE Book
+app.MapDelete("/book/{id}", async (int id, SimplyBooksBEDbContext db) =>
+{
+    var bookToDelete = await db.Books.FindAsync(id);
 
+    if (bookToDelete == null)
+    {
+        return Results.NotFound($"Book with ID {id} not found.");
+    }
+
+    db.Books.Remove(bookToDelete);
+
+    try
+    {
+        await db.SaveChangesAsync();
+        return Results.NoContent(); // 204 No Content
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error deleting book: {ex.Message}");
+    }
+});
 
 app.Run();
