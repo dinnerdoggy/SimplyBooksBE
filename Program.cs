@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
+using SimplyBooksBE.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,5 +77,34 @@ app.MapGet("book/{id}", (SimplyBooksBEDbContext db, int id) =>
         return Results.NotFound("Fix your code");
     }
 });
+
+// CREATE Book
+app.MapPost("/book", async (SimplyBooksBEDbContext db, Book newBook) =>
+{
+    // Check for required fields
+    if (string.IsNullOrWhiteSpace(newBook.Title) || newBook.AuthorId <= 0)
+    {
+        return Results.BadRequest("Missing required fields: Title and AuthorId.");
+    }
+
+    // Validate that the author exists
+    var authorExists = await db.Authors.AnyAsync(a => a.Id == newBook.AuthorId);
+    if (!authorExists)
+    {
+        return Results.BadRequest($"Author with ID {newBook.AuthorId} does not exist.");
+    }
+
+    try
+    {
+        db.Books.Add(newBook);
+        await db.SaveChangesAsync();
+        return Results.Created($"/book/{newBook.Id}", newBook);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem("Error creating book: " + ex.Message);
+    }
+});
+
 
 app.Run();
