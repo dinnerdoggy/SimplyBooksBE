@@ -76,6 +76,44 @@ app.MapPost("/author", async (SimplyBooksBEDbContext db, Author newAuthor) =>
     }
 });
 
+// UPDATE Author
+app.MapPut("/author/{id}", async (int id, SimplyBooksBEDbContext db, Author updatedAuthor) =>
+{
+    var existingAuthor = await db.Authors.FindAsync(id);
+
+    if (existingAuthor == null)
+    {
+        return Results.NotFound($"Author with ID {id} not found.");
+    }
+
+    // Trim values from incoming author
+    updatedAuthor.FirstName = updatedAuthor.FirstName?.Trim();
+    updatedAuthor.LastName = updatedAuthor.LastName?.Trim();
+    updatedAuthor.Email = updatedAuthor.Email?.Trim();
+    updatedAuthor.Image = updatedAuthor.Image?.Trim();
+    updatedAuthor.Uid = updatedAuthor.Uid?.Trim();
+
+    // Apply the updates
+    existingAuthor.FirstName = updatedAuthor.FirstName;
+    existingAuthor.LastName = updatedAuthor.LastName;
+    existingAuthor.Email = updatedAuthor.Email;
+    existingAuthor.Image = updatedAuthor.Image;
+    existingAuthor.Favorite = updatedAuthor.Favorite;
+    existingAuthor.Uid = updatedAuthor.Uid;
+
+    try
+    {
+        await db.SaveChangesAsync();
+        return Results.Ok(existingAuthor);
+    }
+    catch
+    {
+        return Results.Problem("Error updating author");
+    }
+});
+
+
+
 
 // ***** BOOK ENDPOINTS ******
 
