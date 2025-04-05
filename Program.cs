@@ -58,16 +58,22 @@ app.MapGet("author/{id}", (SimplyBooksBEDbContext db, int id) =>
 // GET Books
 app.MapGet("book", (SimplyBooksBEDbContext db) =>
 {
+    return Results.Ok(db.Books);
+});
+
+// GET Book by Id
+app.MapGet("book/{id}", (SimplyBooksBEDbContext db, int id) =>
+{
     try
     {
         var BA = db.Books
         .Include(b => b.Author)
-        .ToList();
+        .FirstOrDefault(b => b.Id == id);
         return Results.Ok(BA);
     }
     catch
     {
-        return Results.NotFound("No Books Found");
+        return Results.NotFound("Fix your code");
     }
 });
 
