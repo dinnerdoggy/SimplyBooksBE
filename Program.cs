@@ -112,8 +112,28 @@ app.MapPut("/author/{id}", async (int id, SimplyBooksBEDbContext db, Author upda
     }
 });
 
+// DELETE Author
+app.MapDelete("/author/{id}", async (int id, SimplyBooksBEDbContext db) =>
+{
+    var authorToDelete = await db.Authors.FindAsync(id);
 
+    if (authorToDelete == null)
+    {
+        return Results.NotFound($"Author with ID {id} not found.");
+    }
 
+    db.Authors.Remove(authorToDelete);
+
+    try
+    {
+        await db.SaveChangesAsync();
+        return Results.NoContent();
+    }
+    catch
+    {
+        return Results.Problem($"Error deleting author");
+    }
+});
 
 // ***** BOOK ENDPOINTS ******
 
