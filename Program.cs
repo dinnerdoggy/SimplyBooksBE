@@ -76,6 +76,44 @@ app.MapPost("/author", async (SimplyBooksBEDbContext db, Author newAuthor) =>
     }
 });
 
+// UPDATE Author
+app.MapPut("/author/{id}", async (int id, SimplyBooksBEDbContext db, Author updatedAuthor) =>
+{
+    var existingAuthor = await db.Authors.FindAsync(id);
+
+    if (existingAuthor == null)
+    {
+        return Results.NotFound($"Author with ID {id} not found.");
+    }
+
+    // Trim values from incoming author
+    updatedAuthor.FirstName = updatedAuthor.FirstName?.Trim();
+    updatedAuthor.LastName = updatedAuthor.LastName?.Trim();
+    updatedAuthor.Email = updatedAuthor.Email?.Trim();
+    updatedAuthor.Image = updatedAuthor.Image?.Trim();
+    updatedAuthor.Uid = updatedAuthor.Uid?.Trim();
+
+    // Apply the updates
+    existingAuthor.FirstName = updatedAuthor.FirstName;
+    existingAuthor.LastName = updatedAuthor.LastName;
+    existingAuthor.Email = updatedAuthor.Email;
+    existingAuthor.Image = updatedAuthor.Image;
+    existingAuthor.Favorite = updatedAuthor.Favorite;
+    existingAuthor.Uid = updatedAuthor.Uid;
+
+    try
+    {
+        await db.SaveChangesAsync();
+        return Results.Ok(existingAuthor);
+    }
+    catch
+    {
+        return Results.Problem("Error updating author");
+    }
+});
+
+
+
 
 // ***** BOOK ENDPOINTS ******
 
@@ -128,6 +166,50 @@ app.MapPost("/book", async (SimplyBooksBEDbContext db, Book newBook) =>
         return Results.Problem("Error creating book: " + ex.Message);
     }
 });
+
+// UPDATE Book
+app.MapPut("/book/{id}", async (int id, SimplyBooksBEDbContext db, Book updatedBook) =>
+{
+    var existingBook = await db.Books.FindAsync(id);
+
+    if (existingBook == null)
+    {
+        return Results.NotFound($"Book with ID {id} not found.");
+    }
+
+    // Trim string inputs
+    updatedBook.Title = updatedBook.Title?.Trim();
+    updatedBook.Image = updatedBook.Image?.Trim();
+    updatedBook.Description = updatedBook.Description?.Trim();
+    updatedBook.Uid = updatedBook.Uid?.Trim();
+
+    // Validate AuthorId
+    var authorExists = await db.Authors.AnyAsync(a => a.Id == updatedBook.AuthorId);
+    if (!authorExists)
+    {
+        return Results.BadRequest($"Author with ID {updatedBook.AuthorId} does not exist.");
+    }
+
+    // Apply updates
+    existingBook.AuthorId = updatedBook.AuthorId;
+    existingBook.Title = updatedBook.Title;
+    existingBook.Image = updatedBook.Image;
+    existingBook.Price = updatedBook.Price;
+    existingBook.Sale = updatedBook.Sale;
+    existingBook.Description = updatedBook.Description;
+    existingBook.Uid = updatedBook.Uid;
+
+    try
+    {
+        await db.SaveChangesAsync();
+        return Results.Ok(existingBook);
+    }
+    catch
+    {
+        return Results.Problem("Error updating book");
+    }
+});
+
 
 
 app.Run();
