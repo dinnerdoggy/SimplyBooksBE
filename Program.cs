@@ -167,5 +167,49 @@ app.MapPost("/book", async (SimplyBooksBEDbContext db, Book newBook) =>
     }
 });
 
+// UPDATE Book
+app.MapPut("/book/{id}", async (int id, SimplyBooksBEDbContext db, Book updatedBook) =>
+{
+    var existingBook = await db.Books.FindAsync(id);
+
+    if (existingBook == null)
+    {
+        return Results.NotFound($"Book with ID {id} not found.");
+    }
+
+    // Trim string inputs
+    updatedBook.Title = updatedBook.Title?.Trim();
+    updatedBook.Image = updatedBook.Image?.Trim();
+    updatedBook.Description = updatedBook.Description?.Trim();
+    updatedBook.Uid = updatedBook.Uid?.Trim();
+
+    // Validate AuthorId
+    var authorExists = await db.Authors.AnyAsync(a => a.Id == updatedBook.AuthorId);
+    if (!authorExists)
+    {
+        return Results.BadRequest($"Author with ID {updatedBook.AuthorId} does not exist.");
+    }
+
+    // Apply updates
+    existingBook.AuthorId = updatedBook.AuthorId;
+    existingBook.Title = updatedBook.Title;
+    existingBook.Image = updatedBook.Image;
+    existingBook.Price = updatedBook.Price;
+    existingBook.Sale = updatedBook.Sale;
+    existingBook.Description = updatedBook.Description;
+    existingBook.Uid = updatedBook.Uid;
+
+    try
+    {
+        await db.SaveChangesAsync();
+        return Results.Ok(existingBook);
+    }
+    catch
+    {
+        return Results.Problem("Error updating book");
+    }
+});
+
+
 
 app.Run();
