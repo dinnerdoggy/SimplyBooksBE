@@ -16,43 +16,43 @@
 
 - PgAdmin (optional, for GUI access to PostgreSQL)
 
-2. Set Your Connection String
-Create a file named appsettings.Development.json in the root of the project (next to Program.cs), and add your PostgreSQL connection string:
+### 2. Set Your Connection String
+- Create a file named appsettings.Development.json in the root of the project (next to Program.cs), and add your PostgreSQL connection string:
 
 { "SimplyBooksBEDbConnectionString": "Host=localhost;Port=5432;Database=SimplyBooksBE;Username=postgres;Password=yourpassword" }
 
-⚠️ This file is included in .gitignore to prevent secrets from being committed.
+- ⚠️ This file is included in .gitignore to prevent secrets from being committed.
 
-3. Apply Migrations & Seed the Database
-This project uses Entity Framework Core to manage the database schema and seed initial data. Run the following command:
+### 3. Apply Migrations & Seed the Database
+- This project uses Entity Framework Core to manage the database schema and seed initial data. Run the following command:
 
-dotnet ef database update
+- dotnet ef database update
 
 This will:
 
-Create the database (if it doesn't exist)
+- Create the database (if it doesn't exist)
 
-Apply the current schema
+- Apply the current schema
 
-Insert initial authors and books
+- Insert initial authors and books
 
-4. Run the Application
+### 4. Run the Application
 Start the server with:
 
-dotnet run
+- dotnet run
 
 Once running, the API will be available at:
 
-https://localhost:7257
+- https://localhost:7257
 
 Swagger (interactive API docs) will be available at:
 
-https://localhost:7257/swagger
+- https://localhost:7257/swagger
 
-API Endpoints
-All endpoints use JSON and follow RESTful conventions.
+## API Endpoints
+### All endpoints use JSON and follow RESTful conventions.
 
-Author Endpoints
+#### Author Endpoints
 GET /author
 Get all authors with their books
 
@@ -72,7 +72,7 @@ Example Author POST Body:
 
 { "email": "jane.doe@example.com", "firstName": "Jane", "lastName": "Doe", "image": "https://example.com/jane.jpg", "favorite": false, "uid": "firebase-uid-12345" }
 
-Book Endpoints
+#### Book Endpoints
 GET /book
 Get all books
 
