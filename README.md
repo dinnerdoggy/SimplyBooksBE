@@ -8,13 +8,13 @@
 ###Getting Started
 
 1. Prerequisites
-.NET 8 SDK
+- .NET 8 SDK
 
-PostgreSQL
+- PostgreSQL
 
-Postman (for testing)
+- Postman (for testing)
 
-PgAdmin (optional, for GUI access to PostgreSQL)
+- PgAdmin (optional, for GUI access to PostgreSQL)
 
 2. Set Your Connection String
 Create a file named appsettings.Development.json in the root of the project (next to Program.cs), and add your PostgreSQL connection string:
