@@ -52,16 +52,10 @@ Swagger (interactive API docs) will be available at:
 ## API Testing
 - Postman collection with documentation available [here.](https://documenter.getpostman.com/view/36624789/2sB2cUCPM9)
 
-Authentication
+## Authentication
 This API is designed to integrate with Firebase Authentication. While authentication is not enforced in this version, the uid field on authors and books can be used to associate records with specific users.
 
 In a production version, Firebase token validation middleware would secure routes based on the authenticated user.
-
-Testing the API
-You can test all endpoints using:
-
-Swagger UI
-https://localhost:7257/swagger
 
 Postman
 Send JSON requests manually to the base URL using your preferred method.
