@@ -57,21 +57,18 @@ This API is designed to integrate with Firebase Authentication. While authentica
 
 In a production version, Firebase token validation middleware would secure routes based on the authenticated user.
 
-Postman
-Send JSON requests manually to the base URL using your preferred method.
+## Technologies Used
+- .NET Core 8 (Minimal APIs)
 
-Technologies Used
-ASP.NET Core 8 (Minimal APIs)
+- Entity Framework Core 8
 
-Entity Framework Core 8
+- PostgreSQL
 
-PostgreSQL
+- Swagger / Swashbuckle
 
-Swagger / Swashbuckle
+- LINQ & async/await
 
-LINQ & async/await
-
-Clean RESTful architecture
+- Clean RESTful architecture
 
 #### Features
 - Full CRUD for authors and books
@@ -84,6 +81,6 @@ Clean RESTful architecture
 
 - Firebase authentication integration
 
-Contact
-Built by [Casey Cunningham].
+## Contact
+Built by [Casey Cunningham.](https://github.com/dinnerdoggy)
 For questions, suggestions, or contributions, feel free to open an issue or contact me at dinnerdoggy@gmail.com.
