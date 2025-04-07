@@ -5,9 +5,9 @@
 
 
 
-##Getting Started
+## Getting Started
 
-###1. Prerequisites
+### 1. Prerequisites
 - .NET 8 SDK
 
 - PostgreSQL
