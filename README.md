@@ -49,48 +49,8 @@ Swagger (interactive API docs) will be available at:
 
 - https://localhost:7257/swagger
 
-## API Endpoints
-### All endpoints use JSON and follow RESTful conventions.
-
-#### Author Endpoints
-GET /author
-Get all authors with their books
-
-GET /author/{id}
-Get a single author by ID
-
-POST /author
-Create a new author
-
-PUT /author/{id}
-Update an existing author
-
-DELETE /author/{id}
-Delete an author
-
-Example Author POST Body:
-
-{ "email": "jane.doe@example.com", "firstName": "Jane", "lastName": "Doe", "image": "https://example.com/jane.jpg", "favorite": false, "uid": "firebase-uid-12345" }
-
-#### Book Endpoints
-GET /book
-Get all books
-
-GET /book/{id}
-Get a single book by ID
-
-POST /book
-Create a new book
-
-PUT /book/{id}
-Update an existing book
-
-DELETE /book/{id}
-Delete a book
-
-Example Book POST Body:
-
-{ "authorId": 1, "title": "Learning Minimal APIs", "image": "https://example.com/book-cover.jpg", "price": 29.99, "sale": false, "description": "A practical guide to building APIs with ASP.NET Core.", "uid": "firebase-uid-12345" }
+## API Testing
+- Postman collection with documentation available [here.](https://documenter.getpostman.com/view/36624789/2sB2cUCPM9)
 
 Authentication
 This API is designed to integrate with Firebase Authentication. While authentication is not enforced in this version, the uid field on authors and books can be used to associate records with specific users.
@@ -119,22 +79,17 @@ LINQ & async/await
 
 Clean RESTful architecture
 
-Features
-Full CRUD for authors and books
+#### Features
+- Full CRUD for authors and books
 
-One-to-many relationship: each book belongs to an author
+- One-to-many relationship: each book belongs to an author
 
-Input trimming and validation for clean, reliable data
+- Input trimming and validation for clean, reliable data
 
-Cascade delete support for removing authors and their books
+- Descriptive error responses and developer-friendly feedback
 
-Descriptive error responses and developer-friendly feedback
-
-Ready for Firebase authentication integration
-
-License
-This project is open source and available under the MIT License.
+- Firebase authentication integration
 
 Contact
-Built by [Your Name].
-For questions, suggestions, or contributions, feel free to open an issue or contact me at yourname@example.com.
+Built by [Casey Cunningham].
+For questions, suggestions, or contributions, feel free to open an issue or contact me at dinnerdoggy@gmail.com.
