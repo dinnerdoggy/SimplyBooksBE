@@ -2,7 +2,11 @@
 
 ## Welcome to the SimplyBooks API — a RESTful web service for managing authors and their books, built with ASP.NET Core and Entity Framework Core. This API supports full CRUD operations and is designed to serve as the backend for book-focused applications.
 
-Getting Started
+
+
+
+###Getting Started
+
 1. Prerequisites
 .NET 8 SDK
 
